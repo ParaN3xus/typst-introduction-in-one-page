@@ -7,24 +7,15 @@
   font: "LXGW WenKai Mono GB",
   weight: 700,
 )
+
 #set page(
+  fill: rgb(0, 0, 0, 0),
+  height: auto,
+  width: 240mm,
   margin: (x: 3%, y: 5%),
-  flipped: true,
 )
 #show raw.where(block: true): it => {
   block(it, fill: gray.lighten(80%), inset: 0.5em, radius: 0.5em)
-}
-
-#let title(it) = {
-  move(
-    box(
-      text(stroke: black + 0.01em, size: 1.8em, it),
-      fill: green.lighten(60%),
-      outset: 0.5cm,
-      radius: (top-left: 0.5cm, bottom-right: 0.5cm),
-    ),
-    dx: -0.2cm,
-  )
 }
 
 #let under-heavy-line(it) = {
@@ -49,10 +40,6 @@
 #show heading.where(level: 3): it => {
   align(center, under-heavy-line(it))
 }
-
-#let main-stroke = blue.lighten(30%) + 0.2cm
-#let sub-stroke = blue.lighten(60%) + 0.1cm
-#let subsub-stroke = (paint: blue.lighten(60%), thickness: 0.05cm, dash: "dashed")
 
 #let sLaTeX = {
   set text(
@@ -83,231 +70,220 @@
 }
 
 #let sample-code = ```typ
-#set heading(numbering: "一、") // 样式设置
-= 兰亭集序
-永和九年，岁在*癸丑*，暮春之初，会于会稽山阴之兰亭，修禊事也。                  // 标记语法
-#{                              // 编程语言
+#set heading(numbering: "一、")   // 样式设置
+= 滕王阁序
+落霞与*孤鹜*齐飞，秋水共长天一色。// 标记语法
+#{                                // 编程语言
  set text(size: 0.8em)
  let t(name, s, o) = table(
-  inset:0.3em, columns:s.len()+1, align:center,
+  inset: 0.3em, columns: s.len() + 1, align: center,
   strong(name), ..s,
   [*年份*],
-  ..(range(o,s.len())+range(o)).map(str)
+  ..(range(o,s.len()) + range(o)).map(str)
  )
- t("天干","甲乙丙丁戊己庚辛壬癸".clusters(),4)
- t("地支","子丑寅卯辰巳午未申酉戌亥".clusters(),4)
+ t("天干", "甲乙丙丁戊己庚辛壬癸".clusters(), 4)
+ t("地支", "子丑寅卯辰巳午未申酉戌亥".clusters(), 4)
 }
-$ cases(x equiv 3 (mod 10),     // 公式排版
-        x equiv 5 (mod 12) )
+$ cases(x equiv 3 (mod 10),       // 公式排版
+        x equiv 5 (mod 12))
   => x equiv 53 (mod 60) $
-$ 353 - floor(353/60) = 53 $
+$ 353 - floor(353 / 60) = 53 $
 ```
 
+#v(1em)
+
+#align(
+  center,
+  image(
+    "banner.png",
+    width: 102%,
+  ),
+)
 #v(-1em)
 
 #grid(
-  columns: (16em, 1.5fr, 1fr, 9.5em, 9.5em),
+  columns: (100%),
   // stroke: black+1pt,
   inset: (x: 0.5em, y: 0.5em),
-  grid.cell(
-    rowspan: 2,
-    inset: (bottom: 1.5em),
-    title[Typst 介绍与展示]
-  ),
-  grid.cell(
-    rowspan: 1,
-    colspan: 1,
-    x: 0,
-    y: 2,
-  )[
-    #subtitle[什么是 Typst?]
+  [
+    #grid(
+      columns: (40%, 1fr),
+      column-gutter: 2em, 
+      grid.cell(
+        x: 0,
+        y: 0
+      )[
+        #subtitle[什么是 Typst?]
 
-    Typst 是一门用于文档排版的标记语言。通过 Typst，你可以用简洁语法编写出美观的文档。
+        #v(-0.6em)
+        Typst 是一门用于文档排版的标记语言。通过 Typst，你可以用简洁语法编写出美观的文档。
 
-    如果你使用过 Markdown 或者 #sLaTeX，你应该很熟悉“从带标记的文本生成文档”的流程。
+        如果你使用过 Markdown 或者 #sLaTeX，你应该很熟悉“从带标记的文本生成文档”的流程。
+
+      ],
+      grid.cell(
+        x:0,
+        y:1
+      )[
+        #v(1em)
+        #subtitle[Typst 的优势]
+        #v(-0.6em)
+
+        - 公式排版、参考文献管理等基本功能
+        - 语法简洁，容易上手
+        - 现代的、增量编译的编程语言可以
+          - 快速地生成文档，并实时预览
+          - 有更好的代码提示和报错信息
+          - 更方便地编程与编写模板
+        - 环境搭建简单
+        - 有包管理器，不需要像 TeX Live 那样在本地安装大量用不到的包
+      ],
+      grid.cell(
+        x:1,
+        rowspan: 2,
+      )[
+        #subtitle[部分包效果展示]
+
+        #grid(
+          columns: (50%, 50%),
+          rows: (11em, auto),
+          grid.cell(align: center)[
+            #import "@preview/cetz:0.2.1"
+            == CeTZ
+            #v(0.5em)
+            #cetz.canvas({
+              import cetz.draw: *
+              circle((0, 0), radius: 1)
+              let A = (60deg, 1)
+              let B = (120deg, 1)
+              line(A, B)
+              let C = (-80deg, 1)
+              let D = (-110deg, 1)
+              line(A, C, stroke: red)
+              line(B, C, stroke: red)
+              line(A, D, stroke: blue)
+              line(B, D, stroke: blue)
+              let angle = cetz.angle.angle
+              angle(C, A, B, stroke: red, fill: red.transparentize(70%), radius: 0.4)
+              angle(D, A, B, stroke: blue, fill: blue.transparentize(70%), radius: 0.4)
+
+              line(C, D, stroke: (dash: "dashed"))
+
+              let O = (0, 0)
+              circle(O, radius: 1pt, fill: black)
+              content(O, $O$, anchor: "south", padding: 3pt)
+            }, length: 1.8cm)
+          ],
+          grid.cell(align: center)[
+            #import "@preview/pinit:0.1.3": *
+            == Pinit
+            #v(0.5em)
+
+            #box(width: 85%)[
+              #align(left)[
+                故列叙时人，录其所述，虽世殊事异，所以兴怀，其致一也。后之览者，亦将有感于#pin(1)斯#pin(2)文。
+
+                #pinit-highlight(1, 2, fill: green.transparentize(78%))
+                #pinit-point-from(2, [这], offset-dx: 35pt, offset-dy: 30pt, body-dx: 4pt, body-dy: 0pt)
+              ]
+            ]
+          ],
+          grid.cell(align: center)[
+            #import "@preview/showybox:2.0.1": showybox
+
+            == Showybox
+
+            #v(0.5em)
+            #showybox(
+              width: 90%,
+              frame: (
+                border-color: blue.darken(50%),
+                title-color: blue.lighten(60%),
+                body-color: blue.lighten(80%),
+                inset: 0.7em,
+              ),
+              title-style: (
+                boxed-style: (
+                  fill: blue.lighten(60%),
+                  radius: (top-left: 10pt, bottom-right: 10pt),
+                ),
+                color: black
+              ),
+              title: "通知",
+                [近日将有一股强冷空气来袭，请注意保暖。],
+                [秋季天干物燥，要时刻注意消防安全。]
+            )
+          ],
+          grid.cell(align: center)[
+            == Fletcher
+
+            #v(0.5em)
+            #import "@preview/fletcher:0.4.2" as fletcher: node, edge
+
+            #fletcher.diagram(
+              node-stroke: blue.darken(50%),
+              node-fill: blue.lighten(80%),
+              spacing: 0.87em,
+              edge-stroke: 1pt,
+              node((0, 0), [A]),
+              edge("~>"),
+              node((-1, 1), [B\ C], corner-radius: 5pt),
+              edge("-->"),
+              node((1, 1), [D]),
+              edge("->"),
+              node((0, 2), [E]),
+              edge((0, 2), (0, 0), "->", stroke: red),
+              edge((0, 2), (-1, 1), "->", bend: 45deg),
+              edge((1, 1), "dd,lll,uu,r", "=>")
+            )
+          ]
+        )
+      
+
+  
+      ]
+    )
   ],
-  grid.cell(
-    rowspan: 3,
-    colspan: 1,
-    x: 0,
-    y: 3,
-  )[
-    #subtitle[Typst 的优势]
 
-    - 公式排版、参考文献管理等基本功能
-    - 语法简洁，容易上手
-    - 现代的、增量编译的编程语言可以
-      - 快速地生成文档，并实时预览
-      - 有更好的代码提示和报错信息
-      - 更方便地编程与编写模板
-    - 环境搭建简单
-    - 有包管理器，不需要像 TeX Live 那样在本地安装大量用不到的包
-    - 得益于友好的编程语言以及 Wasm 插件支持，Typst 已经有了许多功能强大的包
-  ],
   grid.cell(
-    rowspan: 1,
-    colspan: 4,
-    x: 1,
-    y: 0,
     align: center,
     inset: (right: 0pt)
   )[
     #subtitle[代码展示]
   ],
+
   grid.cell(
-    rowspan: 3,
-    colspan: 2,
-    x: 1,
-    y: 1,
     inset: (right: 0pt)
   )[
-    #sample-code
-  ],
-  grid.cell(
-    rowspan: 3,
-    colspan: 2,
-    x: 3,
-    y: 1,
-  )[
-    #set text(font: "Source Han Sans SC", weight: 500, size: 0.95em)
-    #eval("[" + sample-code.text + "]")
-  ],
-  grid.cell(
-    rowspan: 1,
-    colspan: 4,
-    x: 1,
-    y: 4,
-    align: center
-  )[
-    #subtitle[部分包效果展示]
-  ],
-  grid.cell(
-    rowspan: 1,
-    colspan: 1,
-    x: 3,
-    y: 5,
-    align: center,
-  )[
-    #import "@preview/cetz:0.2.1"
-    == CeTZ
-
-    #v(1em)
-
-    #cetz.canvas({
-      import cetz.draw: *
-      circle((0, 0), radius: 1)
-      let A = (60deg, 1)
-      let B = (120deg, 1)
-      line(A, B)
-      let C = (-80deg, 1)
-      let D = (-110deg, 1)
-      line(A, C, stroke: red)
-      line(B, C, stroke: red)
-      line(A, D, stroke: blue)
-      line(B, D, stroke: blue)
-      let angle = cetz.angle.angle
-      angle(C, A, B, stroke: red, fill: red.transparentize(70%), radius: 0.4)
-      angle(D, A, B, stroke: blue, fill: blue.transparentize(70%), radius: 0.4)
-
-      line(C, D, stroke: (dash: "dashed"))
-
-      let O = (0, 0)
-      circle(O, radius: 1pt, fill: black)
-      content(O, $O$, anchor: "south", padding: 3pt)
-    }, length: 1.5cm)
-  ],
-  grid.cell(
-    rowspan: 1,
-    colspan: 1,
-    x: 2,
-    y: 5,
-  )[
-    #import "@preview/pinit:0.1.3": *
-
-    == Pinit
-
-    
-    #v(1em)
-
-    后之览者，亦将有感于#pin(1)斯#pin(2)文。
-
-    #pinit-highlight(1, 2)
-
-    #pinit-point-from(2, [这])
-  ],
-  grid.cell(
-    rowspan: 1,
-    colspan: 1,
-    x: 1,
-    y: 5,
-  )[
-    #import "@preview/showybox:2.0.1": showybox
-
-    == Showybox
-
-    #showybox(
-      frame: (
-        border-color: blue.darken(50%),
-        title-color: blue.lighten(60%),
-        body-color: blue.lighten(80%),
-        inset: 0.6em,
-      ),
-      title-style: (
-        boxed-style: (
-          fill: blue.lighten(60%),
-          radius: (top-left: 10pt, bottom-right: 10pt),
-        ),
-        color: black
-      ),
-      title: "通知",
-      [近日将有一股强冷空气来袭，请注意保暖。],
-      [秋季天干物燥，要时刻注意消防安全。]
+    #v(0.4em)
+    #grid(
+      columns: (50%, 50%),
+      grid.cell(align: center)[
+        #sample-code
+      ],
+      grid.cell(
+        align: center
+      )[
+        #v(0.5em)
+        #box[
+          #align(left)[
+            #set text(font: "Source Han Sans SC", weight: 500, size: 0.95em)
+            #eval("[" + sample-code.text + "]")
+          ]
+        ]
+      ],
     )
   ],
-  grid.cell(
-    rowspan: 1,
-    colspan: 1,
-    x: 4,
-    y: 5,
-    align: center,
-  )[
-    == Fletcher
-
-    #import "@preview/fletcher:0.4.2" as fletcher: node, edge
-
-    #fletcher.diagram(
-      node-stroke: blue.darken(50%),
-      node-fill: blue.lighten(80%),
-      spacing: 0.9em,
-      edge-stroke: 1pt,
-      node((0, 0), [A]),
-      edge("~>"),
-      node((-1, 1), [B\ C], corner-radius: 5pt),
-      edge("-->"),
-      node((1, 1), [D]),
-      edge("->"),
-      node((0, 2), [E]),
-      edge((0, 2), (0, 0), "->", stroke: red),
-      edge((0, 2), (-1, 1), "->", bend: 45deg),
-      edge((1, 1), "dd,lll,uu,r", "=>")
-    )
-  ],
-  
-  grid.vline(
-    x: 1,
-    stroke: main-stroke
-  ),
-
-  grid.hline(
-    y: 4,
-    start: 1,
-    end: 6,
-    stroke: sub-stroke
-  ),
 )
 
-#place(right+bottom, move(dy: 1.5em)[
-  #set text(fill: gray)
-  This work by Wallbreaker5th is marked with CC0 1.0.\
-  Repo: https://github.com/Wallbreaker5th/typst-introduction-in-one-page
-])
+#v(2em)
+
+#place(
+  right + bottom,
+  move(dy: -2.7em)[
+    #set text(fill: gray, size: 11pt)
+    created by Wallbreaker5th, modified by ParaN3xus\
+    typst-introduction-in-one-page, marked with CC0 1.0.
+  ],
+)
+
