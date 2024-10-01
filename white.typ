@@ -9,7 +9,7 @@
 )
 
 #set page(
-  fill: rgb(0, 0, 0, 0),
+  fill: rgb(255, 255, 255, 255),
   height: auto,
   width: 240mm,
   margin: (x: 3%, y: 5%),
@@ -108,7 +108,7 @@ $ 353 - floor(353 / 60) = 53 $
   [
     #grid(
       columns: (40%, 1fr),
-      column-gutter: 2em, 
+      column-gutter: 2em,
       grid.cell(
         x: 0,
         y: 0
@@ -116,7 +116,7 @@ $ 353 - floor(353 / 60) = 53 $
         #subtitle[什么是 Typst?]
 
         #v(-0.6em)
-        Typst 是一门用于文档排版的标记语言。通过 Typst，你可以用简洁语法编写出美观的文档。
+        Typst 是一门用于文档排版的编程语言。通过 Typst，你可以用简洁语法编写出美观的文档。
 
         如果你使用过 Markdown 或者 #sLaTeX，你应该很熟悉“从带标记的文本生成文档”的流程。
 
@@ -238,9 +238,9 @@ $ 353 - floor(353 / 60) = 53 $
             )
           ]
         )
-      
 
-  
+
+
       ]
     )
   ],
