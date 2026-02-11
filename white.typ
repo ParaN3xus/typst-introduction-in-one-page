@@ -102,7 +102,7 @@ $ 353 - floor(353 / 60) = 53 $
 #v(-1em)
 
 #grid(
-  columns: (100%),
+  columns: 100%,
   // stroke: black+1pt,
   inset: (x: 0.5em, y: 0.5em),
   [
@@ -111,7 +111,7 @@ $ 353 - floor(353 / 60) = 53 $
       column-gutter: 2em,
       grid.cell(
         x: 0,
-        y: 0
+        y: 0,
       )[
         #subtitle[什么是 Typst?]
 
@@ -122,8 +122,8 @@ $ 353 - floor(353 / 60) = 53 $
 
       ],
       grid.cell(
-        x:0,
-        y:1
+        x: 0,
+        y: 1,
       )[
         #v(1em)
         #subtitle[Typst 的优势]
@@ -139,7 +139,7 @@ $ 353 - floor(353 / 60) = 53 $
         - 有包管理器，不需要像 TeX Live 那样在本地安装大量用不到的包
       ],
       grid.cell(
-        x:1,
+        x: 1,
         rowspan: 2,
       )[
         #subtitle[部分包效果展示]
@@ -148,34 +148,37 @@ $ 353 - floor(353 / 60) = 53 $
           columns: (50%, 50%),
           rows: (11em, auto),
           grid.cell(align: center)[
-            #import "@preview/cetz:0.2.1"
+            #import "@preview/cetz:0.4.2"
             == CeTZ
             #v(0.5em)
-            #cetz.canvas({
-              import cetz.draw: *
-              circle((0, 0), radius: 1)
-              let A = (60deg, 1)
-              let B = (120deg, 1)
-              line(A, B)
-              let C = (-80deg, 1)
-              let D = (-110deg, 1)
-              line(A, C, stroke: red)
-              line(B, C, stroke: red)
-              line(A, D, stroke: blue)
-              line(B, D, stroke: blue)
-              let angle = cetz.angle.angle
-              angle(C, A, B, stroke: red, fill: red.transparentize(70%), radius: 0.4)
-              angle(D, A, B, stroke: blue, fill: blue.transparentize(70%), radius: 0.4)
+            #cetz.canvas(
+              {
+                import cetz.draw: *
+                circle((0, 0), radius: 1)
+                let A = (60deg, 1)
+                let B = (120deg, 1)
+                line(A, B)
+                let C = (-80deg, 1)
+                let D = (-110deg, 1)
+                line(A, C, stroke: red)
+                line(B, C, stroke: red)
+                line(A, D, stroke: blue)
+                line(B, D, stroke: blue)
+                let angle = cetz.angle.angle
+                angle(C, A, B, stroke: red, fill: red.transparentize(70%), radius: 0.4)
+                angle(D, A, B, stroke: blue, fill: blue.transparentize(70%), radius: 0.4)
 
-              line(C, D, stroke: (dash: "dashed"))
+                line(C, D, stroke: (dash: "dashed"))
 
-              let O = (0, 0)
-              circle(O, radius: 1pt, fill: black)
-              content(O, $O$, anchor: "south", padding: 3pt)
-            }, length: 1.8cm)
+                let O = (0, 0)
+                circle(O, radius: 1pt, fill: black)
+                content(O, $O$, anchor: "south", padding: 3pt)
+              },
+              length: 1.8cm,
+            )
           ],
           grid.cell(align: center)[
-            #import "@preview/pinit:0.1.3": *
+            #import "@preview/pinit:0.2.2": *
             == Pinit
             #v(0.5em)
 
@@ -189,7 +192,7 @@ $ 353 - floor(353 / 60) = 53 $
             ]
           ],
           grid.cell(align: center)[
-            #import "@preview/showybox:2.0.1": showybox
+            #import "@preview/showybox:2.0.4": showybox
 
             == Showybox
 
@@ -207,18 +210,18 @@ $ 353 - floor(353 / 60) = 53 $
                   fill: blue.lighten(60%),
                   radius: (top-left: 10pt, bottom-right: 10pt),
                 ),
-                color: black
+                color: black,
               ),
               title: "通知",
-                [近日将有一股强冷空气来袭，请注意保暖。],
-                [秋季天干物燥，要时刻注意消防安全。]
+              [近日将有一股强冷空气来袭，请注意保暖。],
+              [秋季天干物燥，要时刻注意消防安全。],
             )
           ],
           grid.cell(align: center)[
             == Fletcher
 
             #v(0.5em)
-            #import "@preview/fletcher:0.4.2" as fletcher: node, edge
+            #import "@preview/fletcher:0.5.8" as fletcher: edge, node
 
             #fletcher.diagram(
               node-stroke: blue.darken(50%),
@@ -234,26 +237,26 @@ $ 353 - floor(353 / 60) = 53 $
               node((0, 2), [E]),
               edge((0, 2), (0, 0), "->", stroke: red),
               edge((0, 2), (-1, 1), "->", bend: 45deg),
-              edge((1, 1), "dd,lll,uu,r", "=>")
+              edge((1, 1), "dd,lll,uu,r", "=>"),
             )
-          ]
+          ],
         )
 
 
 
-      ]
+      ],
     )
   ],
 
   grid.cell(
     align: center,
-    inset: (right: 0pt)
+    inset: (right: 0pt),
   )[
     #subtitle[代码展示]
   ],
 
   grid.cell(
-    inset: (right: 0pt)
+    inset: (right: 0pt),
   )[
     #v(0.4em)
     #grid(
@@ -262,7 +265,7 @@ $ 353 - floor(353 / 60) = 53 $
         #sample-code
       ],
       grid.cell(
-        align: center
+        align: center,
       )[
         #v(0.5em)
         #box[
